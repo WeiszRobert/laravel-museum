@@ -20,5 +20,24 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        $users_count = 10;
+        $users = collect();
+        for ($i = 1; $i <= $users_count; $i++) {
+            $users->add(
+                \App\Models\User::factory()->create([
+                    'email' => 'user' . $i . '@szerveroldali.hu',
+                ])
+            );
+        }
+
+        $comments = \App\Models\Comment::factory(rand(5, 10))->create();
+        $items = \App\Models\Item::factory(rand(5, 10))->create();
+
+        $items->each(function ($item) use (&$users, &$labels) {
+            $post->labels()->sync(
+                $labels->random(rand(1, $labels->count()))
+            );
+        });
     }
 }
