@@ -11,9 +11,9 @@
             <div class="float-lg-end">
                 {{-- TODO: Links, policy --}}
 
-                <a href="#" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Create post</a>
+                <a href="{{ route('posts.create')}}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Create post</a>
 
-                <a href="#" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Create category</a>
+                <a href="{{ route('labels.create')}}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Create category</a>
 
             </div>
         </div>
@@ -26,17 +26,23 @@
             <div class="row">
                 {{-- TODO: Read posts from DB --}}
 
-                @forelse ([1,2,3,4,5] as $post)
+                @forelse ( ($items) as $post)
                     <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex align-self-stretch">
                         <div class="card w-100">
                             <img
-                                src="{{ asset('images/default_post_cover.jpg') }}"
+                                src="{{
+                                    asset(
+                                        $post->image
+                                            ? 'storage/' . $post->image
+                                            : 'images/default_post_cover.jpg'
+                                    )
+                                }}"
                                 class="card-img-top"
                                 alt="Post cover"
                             >
                             <div class="card-body">
                                 {{-- TODO: Title --}}
-                                <h5 class="card-title mb-0">Post title</h5>
+                                <h5 class="card-title mb-0">{{ $post->name }}</h5>
                                 <p class="small mb-0">
                                     <span class="me-2">
                                         <i class="fas fa-user"></i>
@@ -47,7 +53,7 @@
                                     <span>
                                         <i class="far fa-calendar-alt"></i>
                                         {{-- TODO: Date --}}
-                                        <span>01/01/2022</span>
+                                        <span>{{ $post->obtained}}</span>
                                     </span>
                                 </p>
 
@@ -59,11 +65,11 @@
                                 @endforeach
 
                                 {{-- TODO: Short desc --}}
-                                <p class="card-text mt-1">Short description</p>
+                                <p class="card-text mt-1">{{ Str::limit($post->description, 40) . "..."}}</p>
                             </div>
                             <div class="card-footer">
                                 {{-- TODO: Link --}}
-                                <a href="#" class="btn btn-primary">
+                                <a href="{{ route('posts.show', $post) }}" class="btn btn-primary">
                                     <span>View post</span> <i class="fas fa-angle-right"></i>
                                 </a>
                             </div>
@@ -80,6 +86,7 @@
 
             <div class="d-flex justify-content-center">
                 {{-- TODO: Pagination --}}
+                {{ $items->links() }}
             </div>
 
         </div>

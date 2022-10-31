@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\LabelController;
+use App\Http\Controllers\ItemController;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +15,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {
+    return Redirect::route('posts.index');
+});
 
+Route::resources([
+    'posts' => ItemController::class,
+    'labels' => LabelController::class
+]);
+
+/*
 Route::get('/', function () {
     return view('welcome');
 });
@@ -42,7 +54,7 @@ Route::get('/categories/create', function () {
 Route::get('/categories/x', function () {
     return view('categories.show');
 });
-
+*/
 // -----------------------------------------
 
 Auth::routes();
