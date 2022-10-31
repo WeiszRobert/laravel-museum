@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -53,7 +54,10 @@ class ItemController extends Controller
     public function show(Item $item)
     {
         return view('items.show', [
-            'item' => $item
+            'item' => $item,
+            //'user' => User::find($item->user_id, 'id')
+            //get name field from previous result
+            'user' => User::find($item->user_id, 'id')
         ]);
     }
 

@@ -10,17 +10,17 @@
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
             {{-- TODO: Title --}}
-            <h1>Post title</h1>
+            <h1>{{$item->name}}</h1>
 
             <p class="small text-secondary mb-0">
                 <i class="fas fa-user"></i>
                 {{-- TODO: Author --}}
-                <span>By Author</span>
+                <span>{{$item->user->name}}</span>
             </p>
             <p class="small text-secondary mb-0">
                 <i class="far fa-calendar-alt"></i>
                 {{-- TODO: Date --}}
-                <span>01/01/2022</span>
+                <span>{{$item->obtained}}</span>
             </p>
 
             <div class="mb-2">
@@ -92,7 +92,7 @@
 
     <div class="mt-3">
         {{-- TODO: Post paragraphs --}}
-         Lorem ipsum
+        {!! nl2br(e($item->description)) !!}
     </div>
 </div>
 @endsection
