@@ -35,9 +35,10 @@ class DatabaseSeeder extends Seeder
         $items = \App\Models\Item::factory(rand(5, 10))->create();
 
         $items->each(function ($item) use (&$users, &$labels) {
-            $post->labels()->sync(
+            $item->labels()->sync(
                 $labels->random(rand(1, $labels->count()))
             );
+            $item->author()->associate($users->random())->save();
         });
     }
 }

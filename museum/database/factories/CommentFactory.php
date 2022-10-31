@@ -18,7 +18,7 @@ class CommentFactory extends Factory
     {
         return [
             // text
-            'text' => fake()->text(),
+            'text' => fake()->paragraphs(rand(3,7), true),
         ];
     }
 }
