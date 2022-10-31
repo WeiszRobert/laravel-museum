@@ -30,15 +30,28 @@ class DatabaseSeeder extends Seeder
                 ])
             );
         }
+        $users->add(
+            \App\Models\User::factory()->create([
+                'name' => 'Test User',
+                'email' => 'admin@szerveroldali.hu',
+                'password' => bcrypt('adminpwd') // TODO: ezt így kéne? idk?
+                ])
+            );
 
-        $comments = \App\Models\Comment::factory(rand(5, 10))->create();
         $items = \App\Models\Item::factory(rand(5, 10))->create();
+        $labels = \App\Models\Label::factory(rand(3, 5))->create();
 
         $items->each(function ($item) use (&$users, &$labels) {
             $item->labels()->sync(
                 $labels->random(rand(1, $labels->count()))
             );
-            $item->author()->associate($users->random())->save();
+            $item->user()->associate($users->random())->save();
+        });
+
+        $comments = \App\Models\Comment::factory(rand(5, 10))->create();
+        $comments->each(function ($comment) use (&$users, &$items) {
+            $comment->user()->associate($users->random())->save();
+            $comment->item()->associate($items->random())->save();
         });
     }
 }
