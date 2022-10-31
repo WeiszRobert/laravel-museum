@@ -46,7 +46,10 @@ class LabelController extends Controller
      */
     public function show(Label $label)
     {
-        //
+        return view('labels.show', [
+            'label' => $label,
+            'items' => $label->items()->orderBy('obtained', 'desc')->where('label_id', $label->id)->paginate(5)
+        ]);
     }
 
     /**

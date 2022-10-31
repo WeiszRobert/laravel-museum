@@ -58,9 +58,9 @@
                                 </p>
 
                                 {{-- TODO: Read post categories from DB --}}
-                                @foreach (['primary', 'secondary','danger', 'warning', 'info', 'dark'] as $category)
-                                    <a href="#" class="text-decoration-none">
-                                        <span class="badge bg-{{ $category }}">{{ $category }}</span>
+                                @foreach ($post->labels as $category)
+                                    <a href="{{ route('labels.show', $category) }}" class="text-decoration-none">
+                                        <span class="badge" style="background-color: {{ $category->color }}">{{ $category->name }}</span>
                                     </a>
                                 @endforeach
 

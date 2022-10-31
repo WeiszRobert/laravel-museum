@@ -44,5 +44,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('labels');
+        Schema::dropIfExists('item_label');
     }
 };
