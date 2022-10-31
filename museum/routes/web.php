@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', function () {
-    return Redirect::route('posts.index');
+    return Redirect::route('items.index');
 });
 
 Route::resources([
-    'posts' => ItemController::class,
+    'items' => ItemController::class,
     'labels' => LabelController::class
 ]);
 

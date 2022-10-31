@@ -15,7 +15,7 @@ class ItemController extends Controller
     public function index()
     {
         //
-        return view('posts.index', [
+        return view('items.index', [
             //'items' => Item::all()
             //'items' => Item::orderBy('obtained', 'desc')->get()
             'items' => Item::orderBy('obtained', 'desc')->paginate(5)
@@ -30,7 +30,7 @@ class ItemController extends Controller
     public function create()
     {
         //
-        return view('posts.create');
+        return view('items.create');
     }
 
     /**
@@ -52,7 +52,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return view('posts.show', [
+        return view('items.show', [
             'item' => $item
         ]);
     }

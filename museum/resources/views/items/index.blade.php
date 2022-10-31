@@ -11,7 +11,7 @@
             <div class="float-lg-end">
                 {{-- TODO: Links, policy --}}
 
-                <a href="{{ route('posts.create')}}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Create post</a>
+                <a href="{{ route('items.create')}}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Create post</a>
 
                 <a href="{{ route('labels.create')}}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Create category</a>
 
@@ -69,7 +69,7 @@
                             </div>
                             <div class="card-footer">
                                 {{-- TODO: Link --}}
-                                <a href="{{ route('posts.show', $post) }}" class="btn btn-primary">
+                                <a href="{{ route('items.show', $post) }}" class="btn btn-primary">
                                     <span>View post</span> <i class="fas fa-angle-right"></i>
                                 </a>
                             </div>
