@@ -87,8 +87,15 @@
     <img
         id="cover_preview_image"
         {{-- TODO: Cover --}}
-        src="{{ asset('images/default_post_cover.jpg') }}"
-        alt="Cover preview"
+        src="{{
+            asset(
+                $item->image
+                    ? 'storage/' . $item->image
+                    : 'images/default_post_cover.jpg'
+            )
+        }}"
+        alt="Image preview"
+        width="350px"
         class="my-3"
     >
 
