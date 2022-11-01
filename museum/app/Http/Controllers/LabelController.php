@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Label;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class LabelController extends Controller
 {
@@ -24,7 +27,9 @@ class LabelController extends Controller
      */
     public function create()
     {
-        return view('labels.create');
+        return view('labels.create', [
+            'labels' => Label::all()
+        ]);
     }
 
     /**
@@ -35,7 +40,38 @@ class LabelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate(
+            [
+                'name' => ['required'],
+                'color' => [
+                    'required',
+                    'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
+                ],
+                'display' => ['nullable', 'boolean'],
+            ],
+            [
+                'name.required' => 'The label name is required.',
+                'color.required' => 'The label color is required.',
+                'color.regex' => 'The label color must be a valid hex color code.',
+                'display.boolean' => 'The label visibility must be a boolean value.',
+            ]
+        );
+
+        //check if the label already exists
+        $label = Label::where('name', $validated['name'])->first();
+        if ($label) {
+            return redirect()->route('labels.create')->with('error', 'The label already exists.');
+        }
+
+        $label = new Label();
+        $label->name = $validated['name'];
+        $label->color = $validated['color'];
+        $label->display = $validated['display'] ?? false;
+        $label->save();
+
+        Session::flash("item_created", $validated['name']);
+
+        return Redirect::route('items.index', $label);
     }
 
     /**
@@ -83,6 +119,16 @@ class LabelController extends Controller
      */
     public function destroy(Label $label)
     {
-        //
+        //todo: ez még kell
+        //$this->authorize('delete');
+
+        //remove the label from all items
+        $label->items()->detach();
+
+        $label->delete();
+
+        Session::flash("label_deleted", $label->name);
+
+        return Redirect::route('items.index');
     }
 }

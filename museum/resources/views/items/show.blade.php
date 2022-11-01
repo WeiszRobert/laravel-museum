@@ -35,7 +35,7 @@
             </div>
 
             {{-- TODO: Link --}}
-            <a href="#"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
+            <a href="{{ route('items.index')}}"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
 
         </div>
 
@@ -63,7 +63,7 @@
                 </div>
                 <div class="modal-body">
                     {{-- TODO: Title --}}
-                    Are you sure you want to delete post <strong>N/A</strong>?
+                    Are you sure you want to delete item <strong>{{$item->name}}</strong>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -72,12 +72,13 @@
                         class="btn btn-danger"
                         onclick="document.getElementById('delete-post-form').submit();"
                     >
-                        Yes, delete this post
+                        Yes, delete this item
                     </button>
 
                     {{-- TODO: Route, directives --}}
-                    <form id="delete-post-form" action="#" method="POST" class="d-none">
-
+                    <form id="delete-post-form" action="{{ route('items.destroy', $item) }}" method="POST" class="d-none">
+                        @method('DELETE')
+                        @csrf
                     </form>
                 </div>
             </div>

@@ -68,6 +68,8 @@ class ItemController extends Controller
                 'obtained.before_or_equal' => 'The obtained date must be today or earlier',
                 'labels.*.exists' => 'The selected label is invalid',
                 'image.file' => 'The image must be a file',
+                'image.image' => 'The image must be an image',
+                'image.max' => 'The image must be less than 4MB'
             ]
         );
         // filename
@@ -146,7 +148,8 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        $this->authorize('delete');
+        //TODO: ez amúgy kell ide
+        //$this->authorize('delete');
 
         // Kitörli a itemot az adatbázisból
         $item->delete();

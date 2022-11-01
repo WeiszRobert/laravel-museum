@@ -33,20 +33,24 @@
                 </div>
                 <div class="modal-body">
                     {{-- TODO: name --}}
-                    Are you sure you want to delete category <strong>N/A</strong>?
+                    Are you sure you want to delete label <strong>{{$label->name}}</strong>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button
                         type="button"
                         class="btn btn-danger"
-                        onclick="document.getElementById('delete-category-form').submit();"
+                        onclick="document.getElementById('delete-label-form').submit();"
                     >
-                        Yes, delete this category
+                        Yes, delete this label
                     </button>
 
                     {{-- TODO: Route, directives --}}
-                    <form id="delete-category-form" action="#" method="POST" class="d-none">
+                    <form id="delete-label-form" action="#" method="POST" class="d-none">
+                        <form id="delete-label-form" action="{{ route('labels.destroy', $label) }}" method="POST" class="d-none">
+                            @method('DELETE')
+                            @csrf
+                        </form>
 
                     </form>
                 </div>

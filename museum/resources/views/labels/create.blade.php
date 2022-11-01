@@ -12,35 +12,35 @@
     {{-- TODO: Session flashes --}}
 
     {{-- TODO: action, method --}}
-    <form>
+    <form action="{{ route('labels.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
 
         <div class="form-group row mb-3">
             <label for="name" class="col-sm-2 col-form-label">Name*</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" value="">
+                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
             </div>
         </div>
 
         <div class="form-group row mb-3">
-            <label for="style" class="col-sm-2 col-form-label py-0">Style*</label>
+            <label for="color" class="col-sm-2 col-form-label">Color*</label>
             <div class="col-sm-10">
-                @foreach (['primary', 'secondary','danger', 'warning', 'info', 'dark'] as $style)
-                    <div class="form-check">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="style"
-                            id="{{ $style }}"
-                            value="{{ $style }}"
-                            {{-- TODO: checked --}}
-                        >
-                        <label class="form-check-label" for="{{ $style }}">
-                            <span class="badge bg-{{ $style }}">{{ $style }}</span>
-                        </label>
-                    </div>
-                @endforeach
-                {{-- TODO: Error handling --}}
+                <input type="color" class="form-control @error('color') is-invalid @enderror" id="color" name="color" value="{{ old('color') }}">
 
+                @error('color')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label for="display" class="col-sm-2 col-form-label">Is it visible?</label>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="display" name="display" value="1">
+                </div>
             </div>
         </div>
 
