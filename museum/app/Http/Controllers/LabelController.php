@@ -96,7 +96,10 @@ class LabelController extends Controller
      */
     public function edit(Label $label)
     {
-        //
+        return view('labels.edit', [
+            'label' => $label,
+            'labels' => Label::all()
+        ]);
     }
 
     /**
@@ -108,7 +111,34 @@ class LabelController extends Controller
      */
     public function update(Request $request, Label $label)
     {
-        //
+        // Jogosultságkezelés
+        //$this->authorize('update');
+
+        $validated = $request->validate(
+            [
+                'name' => ['required'],
+                'color' => [
+                    'required',
+                    'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
+                ],
+                'display' => ['nullable', 'boolean'],
+            ],
+            [
+                'name.required' => 'The label name is required.',
+                'color.required' => 'The label color is required.',
+                'color.regex' => 'The label color must be a valid hex color code.',
+                'display.boolean' => 'The label visibility must be a boolean value.',
+            ]
+        );
+
+        $label->name = $validated['name'];
+        $label->color = $validated['color'];
+        $label->display = $validated['display'] ?? false;
+        $label->save();
+
+        Session::flash("item_updated", $validated['name']);
+
+        return Redirect::route('items.index', $label);
     }
 
     /**

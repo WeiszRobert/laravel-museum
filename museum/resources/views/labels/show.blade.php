@@ -11,7 +11,7 @@
             <div class="float-lg-end">
                 {{-- TODO: Links, policy --}}
 
-                <a href="#" role="button" class="btn btn-sm btn-primary">
+                <a href="{{ route('labels.edit', $label) }}" role="button" class="btn btn-sm btn-primary">
                     <i class="far fa-edit"></i> Edit category
                 </a>
 
