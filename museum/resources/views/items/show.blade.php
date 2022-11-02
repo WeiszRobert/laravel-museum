@@ -43,10 +43,10 @@
             <div class="float-lg-end">
 
                 {{-- TODO: Links, policy --}}
-                <a role="button" class="btn btn-sm btn-primary" href="#"><i class="far fa-edit"></i> Edit post</a>
+                <a role="button" class="btn btn-sm btn-primary" href="{{ route('items.edit', $item) }}"><i class="far fa-edit"></i> Edit item</a>
 
                 <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt">
-                    <span></i> Delete post</span>
+                    <span></i> Delete item</span>
                 </button>
 
             </div>

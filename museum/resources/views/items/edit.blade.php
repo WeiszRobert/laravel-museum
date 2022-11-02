@@ -6,18 +6,26 @@
     <h1>Create post</h1>
     <div class="mb-4">
         {{-- TODO: Link --}}
-        <a href="#"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
+        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
     </div>
 
     {{-- TODO: action, method, enctype --}}
-    <form>
+    <form  action="{{ route('items.update', $item) }}" method="POST" enctype="multipart/form-data">
+        @method('PUT')
+        @csrf
 
         {{-- TODO: Validation --}}
 
         <div class="form-group row mb-3">
-            <label for="title" class="col-sm-2 col-form-label">Title*</label>
+            <label for="name" class="col-sm-2 col-form-label">Name*</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control " id="title" name="title" value="">
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $item->name) }}">
+
+                @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
         </div>
 
@@ -31,39 +39,60 @@
         --}}
 
         <div class="form-group row mb-3">
-            <label for="description" class="col-sm-2 col-form-label">Description</label>
+            <label for="description" class="col-sm-2 col-form-label">Description*</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control " id="description" name="description" value="">
+                <textarea rows="5" class="form-control @error('description') is-invalid @enderror" id="description" name="description">{{ old('description', $item->description) }}</textarea>
+
+                @error('description')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
         </div>
 
         <div class="form-group row mb-3">
-            <label for="text" class="col-sm-2 col-form-label">Text*</label>
+            <label for="obtained" class="col-sm-2 col-form-label">Obtained*</label>
             <div class="col-sm-10">
-                <textarea rows="5" class="form-control" id="text" name="text"></textarea>
+                <input type="date" class="form-control @error('obtained') is-invalid @enderror" id="obtained" name="obtained" value="{{ old('obtained', $item->obtained) }}">
+
+                @error('obtained')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
         </div>
 
         <div class="form-group row mb-3">
-            <label for="categories" class="col-sm-2 col-form-label py-0">Categories</label>
+            <label for="labels" class="col-sm-2 col-form-label py-0">Labels</label>
             <div class="col-sm-10">
                 {{-- TODO: Read post categories from DB --}}
-                @forelse (['primary', 'secondary','danger', 'warning', 'info', 'dark'] as $category)
+                @forelse ($labels as $label)
                     <div class="form-check">
                         <input
                             type="checkbox"
                             class="form-check-input"
-                            value="{{ $category }}"
-                            id="{{ $category }}"
+                            value="{{ $label->id }}"
+                            id="label{{ $label->id }}"
                             {{-- TODO: name, checked --}}
+                            name="labels[]"
+                            @checked(
+                                in_array(
+                                    $label->id,
+                                    old('labels', $item->labels->pluck('id')->toArray())
+                                )
+                            )
                         >
                         {{-- TODO --}}
-                        <label for="{{ $category }}" class="form-check-label">
-                            <span class="badge bg-{{ $category }}">{{ $category }}</span>
+                        <label for="label{{ $label->id }}" class="form-check-label">
+                            <span class="badge" style="background: {{$label->color }}">
+                                {{ $label->name }}
+                            </span>
                         </label>
                     </div>
                 @empty
-                    <p>No categories found</p>
+                    <p>No labels found</p>
                 @endforelse
             </div>
         </div>
@@ -82,21 +111,35 @@
         </div>
 
         <div class="form-group row mb-3" id="cover_image_section">
-            <label for="cover_image" class="col-sm-2 col-form-label">Cover image</label>
+            <label for="image" class="col-sm-2 col-form-label">Cover image</label>
             <div class="col-sm-10">
                 <div class="form-group">
                     <div class="row">
                         <div class="col-12 mb-3">
-                            <input type="file" class="form-control-file" id="cover_image" name="cover_image">
+                            <input type="file" class="form-control-file" id="image" name="image">
                         </div>
                         <div id="cover_preview" class="col-12">
                             <p>Cover preview:</p>
                             {{-- TODO: Use attached image --}}
-                            <img id="cover_preview_image" src="{{ asset('images/default_post_cover.jpg') }}" alt="Cover preview">
+                            <img id="cover_preview_image" src="{{
+                                asset(
+                                    $item->image
+                                        ? 'storage/' . $item->image
+                                        : 'images/default_post_cover.jpg'
+                                )
+                            }}" alt="Cover preview">
                         </div>
                     </div>
                 </div>
             </div>
+
+            @error('image')
+                <p class="text-danger">
+                    <small>
+                        {{ $message }}
+                    </small>
+                </p>
+            @enderror
         </div>
 
         <div class="text-center">
