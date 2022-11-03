@@ -34,7 +34,8 @@ class DatabaseSeeder extends Seeder
             \App\Models\User::factory()->create([
                 'name' => 'Test User',
                 'email' => 'admin@szerveroldali.hu',
-                'password' => bcrypt('adminpwd') // TODO: ezt így kéne? idk?
+                'password' => bcrypt('adminpwd'),
+                'is_admin' => true,
                 ])
             );
 

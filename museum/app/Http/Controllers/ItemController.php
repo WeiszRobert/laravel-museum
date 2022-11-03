@@ -126,7 +126,7 @@ class ItemController extends Controller
     public function edit(Item $item)
     {
         // Jogosultságkezelés
-        //$this->authorize('update');
+        $this->authorize('update', $item);
 
         return view('items.edit', [
             'item' => $item,
@@ -144,7 +144,7 @@ class ItemController extends Controller
     public function update(Request $request, Item $item)
     {
         // Jogosultságkezelés
-        //$this->authorize('update');
+        $this->authorize('update');
 
         $validated = $request->validate(
             [
@@ -213,8 +213,7 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        //TODO: ez amúgy kell ide
-        //$this->authorize('delete');
+        $this->authorize('delete');
 
         // Kitörli a itemot az adatbázisból
         $item->delete();

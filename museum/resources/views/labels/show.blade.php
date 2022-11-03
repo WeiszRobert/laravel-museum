@@ -3,6 +3,19 @@
 
 @section('content')
 <div class="container">
+
+    @if (Session::has('Label_created'))
+        <div class="alert alert-success" role="alert">
+            Label ({{ Session::get('Label_created') }}) successfully created!
+        </div>
+    @endif
+
+    @if (Session::has('Label_updated'))
+        <div class="alert alert-success" role="alert">
+            Label ({{ Session::get('Label_updated') }}) successfully updated!
+        </div>
+    @endif
+
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
             <h1>Posts for <span class="badge" style="background-color: {{ $label->color }}">{{$label->name}}</span></h1>

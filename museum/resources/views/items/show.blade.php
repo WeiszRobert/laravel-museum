@@ -6,6 +6,17 @@
 <div class="container">
 
     {{-- TODO: Session flashes --}}
+    @if (Session::has('item_created'))
+        <div class="alert alert-success" role="alert">
+            Item ({{ Session::get('item_created') }}) successfully created!
+        </div>
+    @endif
+
+    @if (Session::has('item_updated'))
+        <div class="alert alert-success" role="alert">
+            Item ({{ Session::get('item_updated') }}) successfully updated!
+        </div>
+    @endif
 
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
@@ -43,11 +54,15 @@
             <div class="float-lg-end">
 
                 {{-- TODO: Links, policy --}}
+                @can('update', $item)
                 <a role="button" class="btn btn-sm btn-primary" href="{{ route('items.edit', $item) }}"><i class="far fa-edit"></i> Edit item</a>
+                @endcan
 
+                @can('delete', $item)
                 <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt">
                     <span></i> Delete item</span>
                 </button>
+                @endcan
 
             </div>
         </div>
