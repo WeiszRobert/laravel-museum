@@ -82,7 +82,7 @@
                 <hr>
                 <div class="d-flex flex-column align-items-center">
                     <div>
-                        <span class="small">Basic blog</span>
+                        <span class="small">Beadandó feladat 2022 ősz</span>
                         <span class="mx-1">·</span>
                         <span class="small">Laravel {{ app()->version() }}</span>
                         <span class="mx-1">·</span>

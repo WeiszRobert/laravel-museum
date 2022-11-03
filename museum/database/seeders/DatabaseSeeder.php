@@ -33,14 +33,14 @@ class DatabaseSeeder extends Seeder
         }
         $users->add(
             \App\Models\User::factory()->create([
-                'name' => 'Test User',
+                'name' => 'Admin User',
                 'email' => 'admin@szerveroldali.hu',
                 'password' => bcrypt('adminpwd'),
                 'is_admin' => true,
                 ])
             );
 
-        $items = \App\Models\Item::factory(rand(5, 10))->create();
+        $items = \App\Models\Item::factory(rand(10, 20))->create();
         $labels = \App\Models\Label::factory(rand(3, 5))->create();
 
         $items->each(function ($item) use (&$users, &$labels) {

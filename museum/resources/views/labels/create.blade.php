@@ -1,12 +1,14 @@
 @extends('layouts.app')
-@section('title', 'Create category')
+@section('title', 'Create label')
 
 @section('content')
 <div class="container">
-    <h1>Create category</h1>
+    <h1>Create label</h1>
     <div class="mb-4">
         {{-- TODO: Link --}}
-        <a href="#"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
+        <a href="{{ route('labels.show', $label) }}"><i class="fas fa-long-arrow-alt-left"></i> Back to the <span class="badge" style="background-color: {{ $label->color }}">{{$label->name}}</span> labels</a>
+            <br>
+        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
     </div>
 
     {{-- TODO: Session flashes --}}

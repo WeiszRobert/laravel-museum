@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Posts')
+@section('title', 'Show label ' . $label->name)
 
 @section('content')
 <div class="container">
@@ -78,21 +78,21 @@
     {{-- TODO: Session flashes --}}
 
     <div class="row mt-3">
-        <div class="col-12 col-lg-9">
+        <div class="col-12 col-lg-12">
             <div class="row">
                 {{-- TODO: Read posts from DB --}}
 
-                @forelse (($items) as $post)
+                @forelse (($items) as $item)
                     <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex align-self-stretch">
                         <div class="card w-100">
                             <img
                                 src="{{ asset('images/default_post_cover.jpg') }}"
                                 class="card-img-top"
-                                alt="Post cover"
+                                alt="Item cover"
                             >
                             <div class="card-body">
                                 {{-- TODO: Title --}}
-                                <h5 class="card-title mb-0">{{ $post->name }}</h5>
+                                <h5 class="card-title mb-0">{{ $item->name }}</h5>
                                 <p class="small mb-0">
                                     <span class="me-2">
                                         <i class="fas fa-user"></i>
@@ -103,24 +103,24 @@
                                     <span>
                                         <i class="far fa-calendar-alt"></i>
                                         {{-- TODO: Date --}}
-                                        <span>{{ $post->obtained}}</span>
+                                        <span>{{ $item->obtained}}</span>
                                     </span>
                                 </p>
 
                                 {{-- TODO: Read post categories from DB --}}
-                                @foreach ($post->labels as $category)
-                                    <a href="{{ route('labels.show', $category) }}" class="text-decoration-none">
-                                        <span class="badge" style="background-color: {{ $category->color }}">{{ $category->name }}</span>
+                                @foreach ($item->labels as $label)
+                                    <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
+                                        <span class="badge" style="background-color: {{ $label->color }}">{{ $label->name }}</span>
                                     </a>
                                 @endforeach
 
                                 {{-- TODO: Short desc --}}
-                                <p class="card-text mt-1">{{ Str::limit($post->description, 40) . "..."}}</p>
+                                <p class="card-text mt-1">{{ Str::limit($item->description, 40) . "..."}}</p>
                             </div>
                             <div class="card-footer">
                                 {{-- TODO: Link --}}
-                                <a href="{{ route('items.show', $post) }}" class="btn btn-primary">
-                                    <span>View post</span> <i class="fas fa-angle-right"></i>
+                                <a href="{{ route('items.show', $item) }}" class="btn btn-primary">
+                                    <span>View item</span> <i class="fas fa-angle-right"></i>
                                 </a>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
                 @empty
                     <div class="col-12">
                         <div class="alert alert-warning" role="alert">
-                            No posts found!
+                            No items found!
                         </div>
                     </div>
                 @endforelse
@@ -139,6 +139,7 @@
                 {{ $items->links() }}
             </div>
 
+{{--
         </div>
         <div class="col-12 col-lg-3">
             <div class="row">
@@ -148,7 +149,6 @@
                             Categories
                         </div>
                         <div class="card-body">
-                            {{-- TODO: Read categories from DB --}}
                             @foreach (['primary', 'secondary','danger', 'warning', 'info', 'dark'] as $category)
                                 <a href="#" class="text-decoration-none">
                                     <span class="badge bg-{{ $category }}">{{ $category }}</span>
@@ -166,7 +166,6 @@
                         <div class="card-body">
                             <div class="small">
                                 <ul class="fa-ul">
-                                    {{-- TODO: Read stats from DB --}}
                                     <li><span class="fa-li"><i class="fas fa-user"></i></span>Users: N/A</li>
                                     <li><span class="fa-li"><i class="fas fa-layer-group"></i></span>Categories: N/A</li>
                                     <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Posts: N/A</li>
@@ -176,7 +175,7 @@
                     </div>
                 </div>
             </div>
-
+--}}
         </div>
     </div>
 </div>

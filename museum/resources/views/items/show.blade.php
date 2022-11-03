@@ -1,6 +1,6 @@
 @extends('layouts.app')
 {{-- TODO: Post title --}}
-@section('title', 'View post: ')
+@section('title', 'View item: ' . $item->name)
 
 @section('content')
 <div class="container">
@@ -36,10 +36,10 @@
 
             <div class="mb-2">
                 {{-- TODO: Read post categories from DB --}}
-                @foreach ($item->labels as $category)
-                @if ($category->display)
-                    <a href="{{ route('labels.show', $category) }}" class="text-decoration-none">
-                        <span class="badge" style="background-color: {{ $category->color }}">{{ $category->name }}</span>
+                @foreach ($item->labels as $label)
+                @if ($label->display)
+                    <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
+                        <span class="badge" style="background-color: {{ $label->color }}">{{ $label->name }}</span>
                     </a>
                 @endif
                 @endforeach

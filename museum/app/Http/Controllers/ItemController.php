@@ -25,7 +25,7 @@ class ItemController extends Controller
         return view('items.index', [
             //'items' => Item::all()
             //'items' => Item::orderBy('obtained', 'desc')->get()
-            'items' => Item::orderBy('obtained', 'desc')->paginate(5)
+            'items' => Item::orderBy('obtained', 'desc')->paginate(9)
         ]);
     }
 
@@ -184,9 +184,7 @@ class ItemController extends Controller
             $image = null;
         }
 
-        // Ha volt korábban kép, és töröltük v felülírtuk, akkor a szemétként ottmaradt fájlt töröljük ki
         if ($image !== $item->image && $item->image !== null) {
-            // Előző fájl törlése (ezen a ponton a post még nem frissült ugye)
             Storage::disk('public')->delete($item->image);
         }
 
