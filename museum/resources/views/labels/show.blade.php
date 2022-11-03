@@ -18,7 +18,7 @@
 
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
-            <h1>Posts for <span class="badge" style="background-color: {{ $label->color }}">{{$label->name}}</span></h1>
+            <h1>Items for <span class="badge" style="background-color: {{ $label->color }}">{{$label->name}}</span></h1>
         </div>
         <div class="col-12 col-md-4">
             <div class="float-lg-end">
