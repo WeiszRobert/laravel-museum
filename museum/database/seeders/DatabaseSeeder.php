@@ -21,16 +21,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        //delete all tables and records if they exist
+        $this->command->call('migrate:refresh');
+
         $users_count = 10;
         $users = collect();
-        for ($i = 1; $i <= $users_count; $i++) {
-            $users->add(
-                \App\Models\User::factory()->create([
-                    'email' => 'user' . $i . '@szerveroldali.hu',
-                    'password' => bcrypt('password'),
-                ])
-            );
-        }
+
         $users->add(
             \App\Models\User::factory()->create([
                 'name' => 'Admin User',
@@ -39,6 +35,15 @@ class DatabaseSeeder extends Seeder
                 'is_admin' => true,
                 ])
             );
+
+        for ($i = 1; $i <= $users_count; $i++) {
+            $users->add(
+                \App\Models\User::factory()->create([
+                    'email' => 'user' . $i . '@szerveroldali.hu',
+                    'password' => bcrypt('password'),
+                ])
+            );
+        }
 
         $items = \App\Models\Item::factory(rand(10, 20))->create();
         $labels = \App\Models\Label::factory(rand(3, 5))->create();
