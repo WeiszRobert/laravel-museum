@@ -84,7 +84,7 @@ class LabelController extends Controller
     {
         return view('labels.show', [
             'label' => $label,
-            'items' => $label->items()->orderBy('obtained', 'desc')->where('label_id', $label->id)->paginate(5)
+            'items' => $label->items()->orderBy('obtained', 'desc')->where('label_id', $label->id)->paginate(9)
         ]);
     }
 
@@ -96,6 +96,8 @@ class LabelController extends Controller
      */
     public function edit(Label $label)
     {
+        $this->authorize('update', $label);
+
         return view('labels.edit', [
             'label' => $label,
             'labels' => Label::all()
@@ -112,7 +114,7 @@ class LabelController extends Controller
     public function update(Request $request, Label $label)
     {
         // Jogosultságkezelés
-        //$this->authorize('update');
+        $this->authorize('update', $label);
 
         $validated = $request->validate(
             [
@@ -136,9 +138,9 @@ class LabelController extends Controller
         $label->display = $validated['display'] ?? false;
         $label->save();
 
-        Session::flash("item_updated", $validated['name']);
+        Session::flash("label_updated", $validated['name']);
 
-        return Redirect::route('items.index', $label);
+        return Redirect::route('labels.show', $label);
     }
 
     /**
@@ -149,8 +151,7 @@ class LabelController extends Controller
      */
     public function destroy(Label $label)
     {
-        //todo: ez még kell
-        //$this->authorize('delete');
+        $this->authorize('delete', $label);
 
         //remove the label from all items
         $label->items()->detach();

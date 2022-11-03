@@ -11,15 +11,30 @@
             <div class="float-lg-end">
                 {{-- TODO: Links, policy --}}
 
+                @can('create', App\Models\Item::class)
                 <a href="{{ route('items.create')}}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Add item</a>
+                @endcan
 
+                @can('create', App\Models\Label::class)
                 <a href="{{ route('labels.create')}}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Add label</a>
+                @endcan
 
             </div>
         </div>
     </div>
 
     {{-- TODO: Session flashes --}}
+    @if (Session::has('item_deleted'))
+        <div class="alert alert-success" role="alert">
+            Item ({{ Session::get('item_deleted') }}) successfully deleted!
+        </div>
+    @endif
+
+    @if (Session::has('label_deleted'))
+        <div class="alert alert-success" role="alert">
+            Label ({{ Session::get('label_deleted') }}) successfully deleted!
+        </div>
+    @endif
 
     <div class="row mt-3">
         <div class="col-12 col-lg-9">

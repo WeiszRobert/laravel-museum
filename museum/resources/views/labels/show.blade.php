@@ -4,15 +4,15 @@
 @section('content')
 <div class="container">
 
-    @if (Session::has('Label_created'))
+    @if (Session::has('label_created'))
         <div class="alert alert-success" role="alert">
-            Label ({{ Session::get('Label_created') }}) successfully created!
+            Label ({{ Session::get('label_created') }}) successfully created!
         </div>
     @endif
 
-    @if (Session::has('Label_updated'))
+    @if (Session::has('label_updated'))
         <div class="alert alert-success" role="alert">
-            Label ({{ Session::get('Label_updated') }}) successfully updated!
+            Label ({{ Session::get('label_updated') }}) successfully updated!
         </div>
     @endif
 
@@ -24,13 +24,17 @@
             <div class="float-lg-end">
                 {{-- TODO: Links, policy --}}
 
+                @can('update', $label)
                 <a href="{{ route('labels.edit', $label) }}" role="button" class="btn btn-sm btn-primary">
-                    <i class="far fa-edit"></i> Edit category
+                    <i class="far fa-edit"></i> Edit label
                 </a>
+                @endcan
 
+                @can('delete', $label)
                 <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal">
-                    <i class="far fa-trash-alt"></i> Delete category
+                    <i class="far fa-trash-alt"></i> Delete label
                 </button>
+                @endcan
 
             </div>
         </div>

@@ -144,7 +144,7 @@ class ItemController extends Controller
     public function update(Request $request, Item $item)
     {
         // Jogosultságkezelés
-        $this->authorize('update');
+        $this->authorize('update', $item);
 
         $validated = $request->validate(
             [
@@ -213,13 +213,13 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        $this->authorize('delete');
+        $this->authorize('delete', $item);
 
         // Kitörli a itemot az adatbázisból
         $item->delete();
 
         Session::flash("item_deleted", $item->title);
 
-        return Redirect::route('items.index');
+        return Redirect::route('items.index')/*->with('item_deleted', 'Item deleted successfully')*/;
     }
 }

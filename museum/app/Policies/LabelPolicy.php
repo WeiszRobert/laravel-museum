@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Item;
+use App\Models\Label;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ItemPolicy
+class LabelPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class ItemPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Label  $label
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Item $item)
+    public function view(User $user, Label $label)
     {
         //
     }
@@ -41,41 +41,41 @@ class ItemPolicy
      */
     public function create(User $user)
     {
-       return $user->is_admin;
+        return $user->is_admin;
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Label  $label
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Item $item)
+    public function update(User $user, Label $label)
     {
-       return $user->is_admin;
+        return $user->is_admin;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Label  $label
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Item $item)
+    public function delete(User $user, Label $label)
     {
-       return $user->is_admin;
+        return $user->is_admin;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Label  $label
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Item $item)
+    public function restore(User $user, Label $label)
     {
         //
     }
@@ -84,10 +84,10 @@ class ItemPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Label  $label
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Item $item)
+    public function forceDelete(User $user, Label $label)
     {
         //
     }
