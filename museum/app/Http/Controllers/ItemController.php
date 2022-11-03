@@ -113,7 +113,8 @@ class ItemController extends Controller
             'item' => $item,
             //'user' => User::find($item->user_id, 'id')
             //get name field from previous result
-            'user' => User::find($item->user_id, 'id')
+            'user' => User::find($item->user_id, 'id'),
+            'users' => User::all()
         ]);
     }
 

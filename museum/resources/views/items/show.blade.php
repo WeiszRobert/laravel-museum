@@ -119,5 +119,63 @@
         {{-- TODO: Post paragraphs --}}
         {!! nl2br(e($item->description)) !!}
     </div>
+
+    <section style="background-color: #517d81;">
+        <div class="container my-5 py-5">
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-12 col-lg-10">
+              <div class="card text-dark">
+
+                  <div class="card-body p-4">
+
+                    <h4 class="mb-0">Recent comments</h4>
+                    <p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
+
+                    @forelse ($item->comments as $comment)
+                    <div class="d-flex flex-start">
+                        <div>
+                        <h6 class="fw-bold mb-1">{{$users->get($comment->user_id)->name}}</h6>
+                        <div class="d-flex align-items-center mb-3">
+                            <p class="mb-0">
+                                {{$comment->updated_at}}
+                            </p>
+                        </div>
+                        <p class="mb-0">
+                            It uses a dictionary of over 200 Latin words, combined with a handful of
+                            model sentence structures, to generate Lorem Ipsum which looks
+                            reasonable. The generated Lorem Ipsum is therefore always free from
+                            repetition, injected humour, or non-characteristic words etc.
+                        </p>
+                        </div>
+                    </div>
+                    @empty
+                    <div>
+                        <h6 class="fw-bold mb-1">No comments on this item yet.</h6>
+                    </div>
+                </div>
+
+                @endforelse
+
+                    <div class="card-body p-4">
+                      <div class="d-flex flex-start w-100">
+                        <div class="w-100">
+                          <h5>Add a comment</h5>
+                          <div class="form-outline">
+                            <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
+                            <label class="form-label" for="textAreaExample">What is your view?</label>
+                          </div>
+                          <div class="d-flex justify-content-between mt-3">
+                            <button type="button" class="btn btn-success">Danger</button>
+                            <button type="button" class="btn btn-danger">
+                              Send <i class="fas fa-long-arrow-alt-right ms-1"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+            </div>
+          </div>
+      </section>
 </div>
 @endsection
