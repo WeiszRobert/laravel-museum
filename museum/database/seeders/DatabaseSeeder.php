@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
             ])
         );
 
-        $items = \App\Models\Item::factory(rand(10, 20))->create();
+        $items = \App\Models\Item::factory(rand(10, 15))->create();
         $labels = \App\Models\Label::factory(rand(3, 5))->create();
 
         $items->each(function ($item) use (&$users, &$labels) {
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
             $item->user()->associate($users->random())->save();
         });
 
-        $comments = \App\Models\Comment::factory(rand(5, 10))->create();
+        $comments = \App\Models\Comment::factory(rand(10,15))->create();
         $comments->each(function ($comment) use (&$users, &$items) {
             $comment->user()->associate($users->random())->save();
             $comment->item()->associate($items->random())->save();
