@@ -61,7 +61,7 @@ class CommentController extends Controller
 
          //   return Redirect::route('items.index');
         $comment = new Comment();
-        $comment->text = Auth::user();
+        $comment->text = $validated['text'];
         $comment->user()->associate(Auth::user());
         $comment->item()->associate($iiiiiitem);
         $comment->save();
@@ -111,8 +111,15 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Comment $comment, Item $item)
     {
-        //
+        $this->authorize('delete', $comment);
+
+        // Kitörli a itemot az adatbázisból
+        $comment->delete();
+
+        Session::flash("comment_deleted", $comment->title);
+
+        return Redirect::route('items.show', request()->get('item'))/*->with('item_deleted', 'Item deleted successfully')*/;
     }
 }

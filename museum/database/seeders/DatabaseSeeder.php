@@ -27,15 +27,6 @@ class DatabaseSeeder extends Seeder
         $users_count = 10;
         $users = collect();
 
-        $users->add(
-            \App\Models\User::factory()->create([
-                'name' => 'Admin User',
-                'email' => 'admin@szerveroldali.hu',
-                'password' => bcrypt('adminpwd'),
-                'is_admin' => true,
-                ])
-            );
-
         for ($i = 1; $i <= $users_count; $i++) {
             $users->add(
                 \App\Models\User::factory()->create([
@@ -44,6 +35,15 @@ class DatabaseSeeder extends Seeder
                 ])
             );
         }
+
+        $users->add(
+            \App\Models\User::factory()->create([
+                'name' => 'Admin User',
+                'email' => 'admin@szerveroldali.hu',
+                'password' => bcrypt('adminpwd'),
+                'is_admin' => true,
+            ])
+        );
 
         $items = \App\Models\Item::factory(rand(10, 20))->create();
         $labels = \App\Models\Label::factory(rand(3, 5))->create();

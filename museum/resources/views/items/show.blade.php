@@ -138,15 +138,18 @@
                             <div>
                             <h6 class="fw-bold mb-1">{{$users->get($comment->user_id-1)->name}}</h6>
 
-                            {{--get users name with id of $comment->user_id--}}
-
-
                             <div class="d-flex align-items-center mb-3">
                                 <p class="mb-0">
                                     {{$comment->updated_at}}
                                 </p>
                                 <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
-                                <a href="#!" class="link-danger"><i class="fas fa-trash-alt ms-2"></i></a>
+                                @can('delete', $comment)
+                                <form action="{{route('comments.destroy', ['comment' => $comment, 'item' => $item])}}" method="POST" enctype="multipart/form-data">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="link-danger"><i class="fas fa-trash-alt ms-2"></i></button>
+                                </form>
+                                @endcan
                             </div>
                             <p class="mb-0">
                                 {{$comment->text}}
@@ -154,6 +157,34 @@
                             </div>
                         </div>
                     </div>
+{{--
+                    <form  id="comment.{{$comment->id}}" action="/items/{{ $item->id }}/comments/{{$comment->id}}/edit" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="card-body p-4">
+                        <div class="d-flex flex-start w-100">
+                            <div class="w-100">
+                            <label for="comment"><h5>Add a comment as {{ $user->name }}</h5></label>
+                            <div class="form-outline">
+                                <textarea class="form-control" @error('text') is-invalid @enderror id="text" name="text" rows="4"></textarea>
+                                @error('text')
+                                    <div >
+                                        Error: {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+
+                            <div class="d-flex justify-content-between mt-3">
+                                <button type="submit" class="btn btn-success">
+                                    Send <i class="fas fa-long-arrow-alt-right ms-3"></i>
+                                </button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </form>
+--}}
                     <hr class="my-0" style="height: 1px;" />
                     @empty
                     <div>
@@ -163,6 +194,7 @@
 
                 @endforelse
 
+                @can('create', App\Models\Comment::class)
                     <form  action="/items/{{ $item->id }}/comments" method="POST" enctype="multipart/form-data">
                         @csrf
 
@@ -189,6 +221,15 @@
                         </div>
                         </div>
                     </form>
+                @else
+                    <div class="card-body p-4">
+                        <div class="d-flex flex-start w-100">
+                            <div class="w-100">
+                                <h5>Log in to comment</h5>
+                            </div>
+                        </div>
+                    </div>
+                @endcan
               </div>
             </div>
           </div>

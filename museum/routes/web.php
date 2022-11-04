@@ -27,6 +27,7 @@ Route::resources([
 ]);
 
 Route::post('items/{item:id}/comments', [CommentController::class, 'store']);
+//Route::delete('items/{item:id}/comments/{comment:id}', [CommentController::class, 'destroy']);
 
 /*
 Route::get('/', function () {
