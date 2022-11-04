@@ -132,28 +132,36 @@
                     <p class="fw-light">Latest Comments for item: {{$item->name}}</p>
                     <hr class="my-0" style="height: 1px;" />
 
-                    @forelse ($item->comments as $comment)
+                    @forelse ($comments as $comment)
                     <div class="card-body p-4">
                         <div class="d-flex flex-start">
                             <div>
                             <h6 class="fw-bold mb-1">{{$users->get($comment->user_id-1)->name}}</h6>
 
-                            <div class="d-flex align-items-center mb-3">
+                            <div class="">
                                 <p class="mb-0">
-                                    {{$comment->updated_at}}
+                                    Commented at: {{$comment->updated_at}}
                                 </p>
-                                <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
-                                @can('delete', $comment)
-                                <form action="{{route('comments.destroy', ['comment' => $comment, 'item' => $item])}}" method="POST" enctype="multipart/form-data">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button type="submit" class="link-danger"><i class="fas fa-trash-alt ms-2"></i></button>
-                                </form>
-                                @endcan
+                                @if ($comment->updated_at != $comment->created_at)
+                                <p class="mb-0">
+                                    Updated at: {{$comment->updated_at}}
+                                </p>
+                                @endif
+
                             </div>
                             <p class="mb-0">
                                 {{$comment->text}}
                             </p>
+                            @can('update', $comment)
+                                <a role="button" class="btn btn-sm btn-primary" href="{{ route('comments.edit', $comment) }}">Edit comment<i class="fas fa-pencil-alt ms-2"></i></a>
+                            @endcan
+                            @can('delete', $comment)
+                                <form action="{{route('comments.destroy', ['comment' => $comment, 'item' => $item])}}" method="POST" enctype="multipart/form-data">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="link-danger">Delete comment<i class="fas fa-trash-alt ms-2"></i></button>
+                                </form>
+                            @endcan
                             </div>
                         </div>
                     </div>

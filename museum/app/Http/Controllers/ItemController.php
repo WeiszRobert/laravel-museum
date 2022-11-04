@@ -116,7 +116,8 @@ class ItemController extends Controller
             //'user' => User::find($item->user_id, 'id')
             //get name field from previous result
             'user' => Auth::user(),
-            'users' => User::all()
+            'users' => User::all(),
+            'comments' => $item->comments()->orderBy('created_at', 'desc')->get()
         ]);
     }
 

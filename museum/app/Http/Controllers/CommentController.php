@@ -90,7 +90,13 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        //
+        $this->authorize('update', $comment);
+
+        return view('comments.edit', [
+            'comment' => $comment,
+            'item' => $comment->item,
+            'user' => Auth::user()
+        ]);
     }
 
     /**
@@ -102,7 +108,31 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        $request = request();
+
+        $validated = $request->validate(
+            [
+                'text' => 'required'
+            ],
+            [
+                'text.required' => 'Please enter a comment'
+            ]
+        );
+
+      //  $iiiiiitem = Item::find($item->id);
+
+        $item = $comment->item;
+
+         //   return Redirect::route('items.index');
+        //$comment = new Comment();
+        $comment->text = $validated['text'];
+        $comment->user()->associate(Auth::user());
+        //$comment->item()->associate($item);
+        $comment->save();
+
+        Session::flash("comment_message", "Comment added");
+
+        return Redirect::route('items.show', $item);
     }
 
     /**
