@@ -26,7 +26,7 @@
             <p class="small text-secondary mb-0">
                 <i class="fas fa-user"></i>
                 {{-- TODO: Author --}}
-                <span>{{$item->user->name}}</span>
+                <span>{{$item->User::find($item->user_id)->name}}</span>
             </p>
             <p class="small text-secondary mb-0">
                 <i class="far fa-calendar-alt"></i>
@@ -129,25 +129,32 @@
                   <div class="card-body p-4">
 
                     <h4 class="mb-0">Recent comments</h4>
-                    <p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
+                    <p class="fw-light">Latest Comments for item: {{$item->name}}</p>
+                    <hr class="my-0" style="height: 1px;" />
 
                     @forelse ($item->comments as $comment)
-                    <div class="d-flex flex-start">
-                        <div>
-                        <h6 class="fw-bold mb-1">{{$users->get($comment->user_id)->name}}</h6>
-                        <div class="d-flex align-items-center mb-3">
+                    <div class="card-body p-4">
+                        <div class="d-flex flex-start">
+                            <div>
+                            <h6 class="fw-bold mb-1">{{$users->get($comment->user_id-1)->name}}</h6>
+
+                            {{--get users name with id of $comment->user_id--}}
+
+
+                            <div class="d-flex align-items-center mb-3">
+                                <p class="mb-0">
+                                    {{$comment->updated_at}}
+                                </p>
+                                <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
+                                <a href="#!" class="link-danger"><i class="fas fa-trash-alt ms-2"></i></a>
+                            </div>
                             <p class="mb-0">
-                                {{$comment->updated_at}}
+                                {{$comment->text}}
                             </p>
-                        </div>
-                        <p class="mb-0">
-                            It uses a dictionary of over 200 Latin words, combined with a handful of
-                            model sentence structures, to generate Lorem Ipsum which looks
-                            reasonable. The generated Lorem Ipsum is therefore always free from
-                            repetition, injected humour, or non-characteristic words etc.
-                        </p>
+                            </div>
                         </div>
                     </div>
+                    <hr class="my-0" style="height: 1px;" />
                     @empty
                     <div>
                         <h6 class="fw-bold mb-1">No comments on this item yet.</h6>
@@ -156,26 +163,36 @@
 
                 @endforelse
 
-                    <div class="card-body p-4">
-                      <div class="d-flex flex-start w-100">
-                        <div class="w-100">
-                          <h5>Add a comment</h5>
-                          <div class="form-outline">
-                            <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
-                            <label class="form-label" for="textAreaExample">What is your view?</label>
-                          </div>
-                          <div class="d-flex justify-content-between mt-3">
-                            <button type="button" class="btn btn-success">Danger</button>
-                            <button type="button" class="btn btn-danger">
-                              Send <i class="fas fa-long-arrow-alt-right ms-1"></i>
-                            </button>
-                          </div>
+                    <form  action="/items/{{ $item->id }}/comments" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="card-body p-4">
+                        <div class="d-flex flex-start w-100">
+                            <div class="w-100">
+                            <label for="comment"><h5>Add a comment as {{ $user->name }}</h5></label>
+                            <div class="form-outline">
+                                <textarea class="form-control" @error('text') is-invalid @enderror id="text" name="text" rows="4"></textarea>
+                                @error('text')
+                                    <div >
+                                        Error: {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+
+                            <div class="d-flex justify-content-between mt-3">
+                                <button type="submit" class="btn btn-success">
+                                    Send <i class="fas fa-long-arrow-alt-right ms-3"></i>
+                                </button>
+                            </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>
+                        </div>
+                    </form>
               </div>
             </div>
           </div>
       </section>
+    </div>
 </div>
 @endsection

@@ -52,6 +52,8 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        //TODO $this->authori
+
         $validated = $request->validate(
             [
                 'name' => 'required',
@@ -113,7 +115,7 @@ class ItemController extends Controller
             'item' => $item,
             //'user' => User::find($item->user_id, 'id')
             //get name field from previous result
-            'user' => User::find($item->user_id, 'id'),
+            'user' => Auth::user(),
             'users' => User::all()
         ]);
     }

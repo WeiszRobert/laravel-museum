@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LabelController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
@@ -21,8 +22,11 @@ Route::get('/', function () {
 
 Route::resources([
     'items' => ItemController::class,
-    'labels' => LabelController::class
+    'labels' => LabelController::class,
+    'comments' => CommentController::class
 ]);
+
+Route::post('items/{item:id}/comments', [CommentController::class, 'store']);
 
 /*
 Route::get('/', function () {
