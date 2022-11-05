@@ -21,10 +21,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
         return view('items.index', [
-            //'items' => Item::all()
-            //'items' => Item::orderBy('obtained', 'desc')->get()
             'items' => Item::orderBy('obtained', 'desc')->paginate(9)
         ]);
     }
@@ -36,7 +33,6 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
         return view('items.create', [
             'item' => new Item(),
             'labels' => Label::all(),
@@ -52,8 +48,6 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //TODO $this->authori
-
         $validated = $request->validate(
             [
                 'name' => ['required', 'unique:items'],
@@ -75,7 +69,7 @@ class ItemController extends Controller
                 'image.max' => 'The image must be less than 4MB'
             ]
         );
-        // filename
+
         $fn = null;
 
         if ($request->hasFile('image')) {
@@ -100,7 +94,6 @@ class ItemController extends Controller
 
         Session::flash("item_created", $validated['name']);
 
-        // redirect()->route(...)
         return Redirect::route('items.show', $item);
     }
 
@@ -114,8 +107,6 @@ class ItemController extends Controller
     {
         return view('items.show', [
             'item' => $item,
-            //'user' => User::find($item->user_id, 'id')
-            //get name field from previous result
             'user' => Auth::user(),
             'users' => User::all(),
             'comments' => $item->comments()->orderBy('created_at', 'desc')->get()
@@ -130,7 +121,6 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        // Jogosultságkezelés
         $this->authorize('update', $item);
 
         return view('items.edit', [
@@ -148,7 +138,6 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        // Jogosultságkezelés
         $this->authorize('update', $item);
 
         $validated = $request->validate(
@@ -173,7 +162,6 @@ class ItemController extends Controller
             ]
         );
 
-        // filename
         $image = $item->image;
         $remove_image = isset($validated['remove_cover_image']);
 
@@ -218,11 +206,10 @@ class ItemController extends Controller
     {
         $this->authorize('delete', $item);
 
-        // Kitörli a itemet az adatbázisból
         $item->delete();
 
         Session::flash("item_deleted", $item->title);
 
-        return Redirect::route('items.index')/*->with('item_deleted', 'Item deleted successfully')*/;
+        return Redirect::route('items.index');
     }
 }

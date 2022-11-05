@@ -58,7 +58,6 @@ class LabelController extends Controller
             ]
         );
 
-        //check if the label already exists
         $label = Label::where('name', $validated['name'])->first();
         if ($label) {
             return redirect()->route('labels.create')->with('error', 'The label already exists.');
@@ -114,7 +113,6 @@ class LabelController extends Controller
      */
     public function update(Request $request, Label $label)
     {
-        // Jogosultságkezelés
         $this->authorize('update', $label);
 
         $validated = $request->validate(
@@ -155,7 +153,6 @@ class LabelController extends Controller
     {
         $this->authorize('delete', $label);
 
-        //remove the label from all items
         $label->items()->detach();
 
         $label->delete();

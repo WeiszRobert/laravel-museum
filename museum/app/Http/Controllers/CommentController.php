@@ -39,7 +39,7 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
     public function store(Item $item)
@@ -57,13 +57,10 @@ class CommentController extends Controller
             ]
         );
 
-        $iiiiiitem = Item::find($item->id);
-
-         //   return Redirect::route('items.index');
         $comment = new Comment();
         $comment->text = $validated['text'];
         $comment->user()->associate(Auth::user());
-        $comment->item()->associate($iiiiiitem);
+        $comment->item()->associate(Item::find($item->id));
         $comment->save();
 
         Session::flash("comment_message", "Comment added");
@@ -119,15 +116,10 @@ class CommentController extends Controller
             ]
         );
 
-      //  $iiiiiitem = Item::find($item->id);
-
         $item = $comment->item;
 
-         //   return Redirect::route('items.index');
-        //$comment = new Comment();
         $comment->text = $validated['text'];
         $comment->user()->associate(Auth::user());
-        //$comment->item()->associate($item);
         $comment->save();
 
         Session::flash("comment_message", "Comment updated");
@@ -145,11 +137,10 @@ class CommentController extends Controller
     {
         $this->authorize('delete', $comment);
 
-        // Kitörli a itemot az adatbázisból
         $comment->delete();
 
         Session::flash("comment_message", "Comment deleted");
 
-        return Redirect::route('items.show', request()->get('item'))/*->with('item_deleted', 'Item deleted successfully')*/;
+        return Redirect::route('items.show', request()->get('item'));
     }
 }
