@@ -18,6 +18,12 @@
         </div>
     @endif
 
+    @if (Session::has("comment_message"))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get("comment_message") }}
+        </div>
+    @endif
+
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
             {{-- TODO: Title --}}
@@ -37,7 +43,7 @@
             <div class="mb-2">
                 {{-- TODO: Read post categories from DB --}}
                 @foreach ($item->labels as $label)
-                @if ($label->display)
+                @if ($label->display == 1)
                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
                         <span class="badge" style="background-color: {{ $label->color }}">{{ $label->name }}</span>
                     </a>
@@ -100,6 +106,7 @@
         </div>
     </div>
 
+    @if ($item->image)
     <img
         id="cover_preview_image"
         {{-- TODO: Cover --}}
@@ -114,6 +121,7 @@
         width="350px"
         class="my-3"
     >
+    @endif
 
     <div class="mt-3">
         {{-- TODO: Post paragraphs --}}

@@ -62,7 +62,7 @@
                                     <span class="me-2">
                                         <i class="fas fa-user"></i>
                                         {{-- TODO: Author --}}
-                                        <span>By Author</span>
+                                        <span>By {{$item->User::find($item->user_id)->name}}</span>
                                     </span>
 
                                     <span>
@@ -74,13 +74,15 @@
 
                                 {{-- TODO: Read post categories from DB --}}
                                 @foreach ($item->labels as $label)
+                                @if ($label->display == 1)
                                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
                                         <span class="badge" style="background-color: {{ $label->color }}">{{ $label->name }}</span>
                                     </a>
+                                @endif
                                 @endforeach
 
                                 {{-- TODO: Short desc --}}
-                                <p class="card-text mt-1">{{ Str::limit($item->description, 40) . "..."}}</p>
+                                <p class="card-text mt-1">{{ Str::limit($item->description, 40)}}</p>
                             </div>
                             <div class="card-footer">
                                 {{-- TODO: Link --}}
@@ -103,45 +105,6 @@
                 {{-- TODO: Pagination --}}
                 {{ $items->links() }}
             </div>
-{{--
-        </div>
-        <div class="col-12 col-lg-3">
-            <div class="row">
-                <div class="col-12 mb-3">
-                    <div class="card bg-light">
-                        <div class="card-header">
-                            Categories
-                        </div>
-                        <div class="card-body">
-
-                            @foreach (['primary', 'secondary','danger', 'warning', 'info', 'dark'] as $category)
-                                <a href="#" class="text-decoration-none">
-                                    <span class="badge bg-{{ $category }}">{{ $category }}</span>
-                                </a>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 mb-3">
-                    <div class="card bg-light">
-                        <div class="card-header">
-                            Statistics
-                        </div>
-                        <div class="card-body">
-                            <div class="small">
-                                <ul class="fa-ul">
-
-                                    <li><span class="fa-li"><i class="fas fa-user"></i></span>Users: N/A</li>
-                                    <li><span class="fa-li"><i class="fas fa-layer-group"></i></span>Categories: N/A</li>
-                                    <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Posts: N/A</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
---}}
         </div>
     </div>
 </div>

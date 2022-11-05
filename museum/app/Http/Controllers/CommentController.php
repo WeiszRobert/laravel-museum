@@ -130,7 +130,7 @@ class CommentController extends Controller
         //$comment->item()->associate($item);
         $comment->save();
 
-        Session::flash("comment_message", "Comment added");
+        Session::flash("comment_message", "Comment updated");
 
         return Redirect::route('items.show', $item);
     }
@@ -148,7 +148,7 @@ class CommentController extends Controller
         // Kitörli a itemot az adatbázisból
         $comment->delete();
 
-        Session::flash("comment_deleted", $comment->title);
+        Session::flash("comment_message", "Comment deleted");
 
         return Redirect::route('items.show', request()->get('item'))/*->with('item_deleted', 'Item deleted successfully')*/;
     }
