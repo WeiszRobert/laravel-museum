@@ -101,9 +101,11 @@
                                 </p>
 
                                 @foreach ($item->labels as $label)
+                                @if ($label->display == 1)
                                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
                                         <span class="badge" style="background-color: {{ $label->color }}">{{ $label->name }}</span>
                                     </a>
+                                @endif
                                 @endforeach
 
                                 <p class="card-text mt-1">{{ Str::limit($item->description, 40)}}</p>

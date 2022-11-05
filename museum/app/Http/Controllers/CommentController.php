@@ -44,7 +44,7 @@ class CommentController extends Controller
      */
     public function store(Item $item)
     {
-        $this->authorize('create', $item);
+        $this->authorize('create', Comment::class);
 
         $request = request();
 

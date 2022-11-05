@@ -4,6 +4,11 @@
 @section('content')
 <div class="container">
     <h1>Edit item</h1>
+
+    <div class="mb-4">
+        <a href="{{ route('items.show', $item) }}"><i class="fas fa-long-arrow-alt-left"></i> Back to the item</a>
+    </div>
+
     <div class="mb-4">
         <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
     </div>

@@ -189,6 +189,8 @@ class ItemController extends Controller
 
         if (isset($validated['labels'])) {
             $item->labels()->sync($validated['labels']);
+        } else {
+            $item->labels()->detach();
         }
 
         Session::flash("item_updated", $validated['name']);
