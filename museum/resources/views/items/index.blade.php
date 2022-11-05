@@ -34,6 +34,24 @@
     @endif
 
     <div class="row mt-3">
+        <div class="col-12 mb-3">
+            <div class="card bg-light">
+                <div class="card-header">
+                    All labels
+                </div>
+                <div class="card-body">
+                    {{-- TODO: Read categories from DB --}}
+                    @foreach ($labels as $label)
+                        <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
+                            <span class="badge" style="background-color: {{ $label->color }}">{{ $label->name }}</span>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
         <div class="col-12 col-lg-12">
             <div class="row">
                 @forelse ( ($items) as $item)
