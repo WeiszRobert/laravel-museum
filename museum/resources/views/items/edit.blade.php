@@ -109,7 +109,6 @@
                         </div>
                         <div id="cover_preview" class="col-12">
                             <p>Cover preview </p>
-                            {{-- TODO: Use attached image --}}
                             <img id="cover_preview_image" src="{{
                                 asset(
                                     $item->image
