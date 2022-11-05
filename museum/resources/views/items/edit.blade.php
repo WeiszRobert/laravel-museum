@@ -5,16 +5,12 @@
 <div class="container">
     <h1>Edit item</h1>
     <div class="mb-4">
-        {{-- TODO: Link --}}
         <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
     </div>
 
-    {{-- TODO: action, method, enctype --}}
     <form  action="{{ route('items.update', $item) }}" method="POST" enctype="multipart/form-data">
         @method('PUT')
         @csrf
-
-        {{-- TODO: Validation --}}
 
         <div class="form-group row mb-3">
             <label for="name" class="col-sm-2 col-form-label">Name*</label>
@@ -28,15 +24,6 @@
                 @enderror
             </div>
         </div>
-
-        {{--
-            Handling invalid input fields:
-
-            <input type="text" class="form-control is-invalid" ...>
-            <div class="invalid-feedback">
-                Message
-            </div>
-        --}}
 
         <div class="form-group row mb-3">
             <label for="description" class="col-sm-2 col-form-label">Description*</label>
@@ -67,7 +54,6 @@
         <div class="form-group row mb-3">
             <label for="labels" class="col-sm-2 col-form-label py-0">Labels</label>
             <div class="col-sm-10">
-                {{-- TODO: Read post categories from DB --}}
                 @forelse ($labels as $label)
                     <div class="form-check">
                         <input
@@ -75,7 +61,6 @@
                             class="form-check-input"
                             value="{{ $label->id }}"
                             id="label{{ $label->id }}"
-                            {{-- TODO: name, checked --}}
                             name="labels[]"
                             @checked(
                                 in_array(
@@ -84,7 +69,6 @@
                                 )
                             )
                         >
-                        {{-- TODO --}}
                         <label for="label{{ $label->id }}" class="form-check-label">
                             <span class="badge" style="background: {{$label->color }}">
                                 {{ $label->name }}
@@ -119,7 +103,7 @@
                             <input type="file" class="form-control-file" id="image" name="image">
                         </div>
                         <div id="cover_preview" class="col-12">
-                            <p>Cover preview:</p>
+                            <p>Cover preview </p>
                             {{-- TODO: Use attached image --}}
                             <img id="cover_preview_image" src="{{
                                 asset(
@@ -153,7 +137,7 @@
 <script>
     const removeCoverInput = document.querySelector('input#remove_cover_image');
     const coverImageSection = document.querySelector('#cover_image_section');
-    const coverImageInput = document.querySelector('input#cover_image');
+    const coverImageInput = document.querySelector('input#image');
     const coverPreviewContainer = document.querySelector('#cover_preview');
     const coverPreviewImage = document.querySelector('img#cover_preview_image');
     // Render Blade to JS code:

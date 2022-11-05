@@ -122,7 +122,7 @@
 
 @section('scripts')
 <script>
-    const coverImageInput = document.querySelector('input#cover_image');
+    const coverImageInput = document.querySelector('input#image');
     const coverPreviewContainer = document.querySelector('#cover_preview');
     const coverPreviewImage = document.querySelector('img#cover_preview_image');
 

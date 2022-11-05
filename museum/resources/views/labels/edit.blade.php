@@ -5,13 +5,11 @@
 <div class="container">
     <h1>Edit label</h1>
     <div class="mb-4">
-        {{-- TODO: Link --}}
         <a href="{{ route('labels.show', $label) }}"><i class="fas fa-long-arrow-alt-left"></i> Back to the <span class="badge" style="background-color: {{ $label->color }}">{{$label->name}}</span> labels</a>
             <br>
         <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
     </div>
 
-    {{-- TODO: action, method --}}
     <form action="{{ route('labels.update', $label) }}" method="POST" enctype="multipart/form-data">
         @method('PUT')
         @csrf

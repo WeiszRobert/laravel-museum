@@ -1,11 +1,9 @@
 @extends('layouts.app')
-{{-- TODO: Post title --}}
 @section('title', 'View item: ' . $item->name)
 
 @section('content')
 <div class="container">
 
-    {{-- TODO: Session flashes --}}
     @if (Session::has('item_created'))
         <div class="alert alert-success" role="alert">
             Item ({{ Session::get('item_created') }}) successfully created!
@@ -26,22 +24,18 @@
 
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
-            {{-- TODO: Title --}}
             <h1>{{$item->name}}</h1>
 
             <p class="small text-secondary mb-0">
                 <i class="fas fa-user"></i>
-                {{-- TODO: Author --}}
                 <span>{{$item->User::find($item->user_id)->name}}</span>
             </p>
             <p class="small text-secondary mb-0">
                 <i class="far fa-calendar-alt"></i>
-                {{-- TODO: Date --}}
                 <span>{{$item->obtained}}</span>
             </p>
 
             <div class="mb-2">
-                {{-- TODO: Read post categories from DB --}}
                 @foreach ($item->labels as $label)
                 @if ($label->display == 1)
                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
@@ -51,7 +45,6 @@
                 @endforeach
             </div>
 
-            {{-- TODO: Link --}}
             <a href="{{ route('items.index')}}"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
 
         </div>
@@ -59,7 +52,6 @@
         <div class="col-12 col-md-4">
             <div class="float-lg-end">
 
-                {{-- TODO: Links, policy --}}
                 @can('update', $item)
                 <a role="button" class="btn btn-sm btn-primary" href="{{ route('items.edit', $item) }}"><i class="far fa-edit"></i> Edit item</a>
                 @endcan
@@ -83,7 +75,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {{-- TODO: Title --}}
                     Are you sure you want to delete item <strong>{{$item->name}}</strong>?
                 </div>
                 <div class="modal-footer">
@@ -96,7 +87,6 @@
                         Yes, delete this item
                     </button>
 
-                    {{-- TODO: Route, directives --}}
                     <form id="delete-post-form" action="{{ route('items.destroy', $item) }}" method="POST" class="d-none">
                         @method('DELETE')
                         @csrf
@@ -109,7 +99,6 @@
     @if ($item->image)
     <img
         id="cover_preview_image"
-        {{-- TODO: Cover --}}
         src="{{
             asset(
                 $item->image
@@ -124,7 +113,6 @@
     @endif
 
     <div class="mt-3">
-        {{-- TODO: Post paragraphs --}}
         {!! nl2br(e($item->description)) !!}
     </div>
 
@@ -173,34 +161,7 @@
                             </div>
                         </div>
                     </div>
-{{--
-                    <form  id="comment.{{$comment->id}}" action="/items/{{ $item->id }}/comments/{{$comment->id}}/edit" method="POST" enctype="multipart/form-data">
-                        @csrf
 
-                        <div class="card-body p-4">
-                        <div class="d-flex flex-start w-100">
-                            <div class="w-100">
-                            <label for="comment"><h5>Add a comment as {{ $user->name }}</h5></label>
-                            <div class="form-outline">
-                                <textarea class="form-control" @error('text') is-invalid @enderror id="text" name="text" rows="4"></textarea>
-                                @error('text')
-                                    <div >
-                                        Error: {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-
-                            <div class="d-flex justify-content-between mt-3">
-                                <button type="submit" class="btn btn-success">
-                                    Send <i class="fas fa-long-arrow-alt-right ms-3"></i>
-                                </button>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                    </form>
---}}
                     <hr class="my-0" style="height: 1px;" />
                     @empty
                     <div>
