@@ -22,7 +22,8 @@ class ItemController extends Controller
     public function index()
     {
         return view('items.index', [
-            'items' => Item::orderBy('obtained', 'desc')->paginate(9)
+            'items' => Item::orderBy('obtained', 'desc')->paginate(9),
+            'labels' => Label::all(),
         ]);
     }
 
@@ -210,8 +211,6 @@ class ItemController extends Controller
 
         $item->delete();
 
-        Session::flash("item_deleted", $item->title);
-
-        return Redirect::route('items.index');
+        return Redirect::route('items.index')->with('item_deleted', $item->name);
     }
 }
