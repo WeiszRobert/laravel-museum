@@ -24,6 +24,7 @@
             <div class="float-lg-end">
                 {{-- TODO: Links, policy --}}
 
+
                 @can('update', $label)
                 <a href="{{ route('labels.edit', $label) }}" role="button" class="btn btn-sm btn-primary">
                     <i class="far fa-edit"></i> Edit label
@@ -37,7 +38,10 @@
                 @endcan
 
             </div>
+
+
         </div>
+        <a href="{{ route('items.index')}}"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
     </div>
 
     <!-- Modal -->
@@ -97,7 +101,7 @@
                                     <span class="me-2">
                                         <i class="fas fa-user"></i>
                                         {{-- TODO: Author --}}
-                                        <span>By Author</span>
+                                        <span>By {{$item->User::find($item->user_id)->name}}</span>
                                     </span>
 
                                     <span>
@@ -138,44 +142,6 @@
                 {{-- TODO: Pagination --}}
                 {{ $items->links() }}
             </div>
-
-{{--
-        </div>
-        <div class="col-12 col-lg-3">
-            <div class="row">
-                <div class="col-12 mb-3">
-                    <div class="card bg-light">
-                        <div class="card-header">
-                            Categories
-                        </div>
-                        <div class="card-body">
-                            @foreach (['primary', 'secondary','danger', 'warning', 'info', 'dark'] as $category)
-                                <a href="#" class="text-decoration-none">
-                                    <span class="badge bg-{{ $category }}">{{ $category }}</span>
-                                </a>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 mb-3">
-                    <div class="card bg-light">
-                        <div class="card-header">
-                            Statistics
-                        </div>
-                        <div class="card-body">
-                            <div class="small">
-                                <ul class="fa-ul">
-                                    <li><span class="fa-li"><i class="fas fa-user"></i></span>Users: N/A</li>
-                                    <li><span class="fa-li"><i class="fas fa-layer-group"></i></span>Categories: N/A</li>
-                                    <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Posts: N/A</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
---}}
         </div>
     </div>
 </div>

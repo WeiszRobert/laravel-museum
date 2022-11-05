@@ -6,8 +6,6 @@
     <h1>Create label</h1>
     <div class="mb-4">
         {{-- TODO: Link --}}
-        <a href="{{ route('labels.show', $label) }}"><i class="fas fa-long-arrow-alt-left"></i> Back to the <span class="badge" style="background-color: {{ $label->color }}">{{$label->name}}</span> labels</a>
-            <br>
         <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
     </div>
 
@@ -20,7 +18,12 @@
         <div class="form-group row mb-3">
             <label for="name" class="col-sm-2 col-form-label">Name*</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
+                @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
         </div>
 

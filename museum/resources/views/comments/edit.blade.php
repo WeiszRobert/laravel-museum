@@ -5,13 +5,12 @@
 <div class="container">
     <h1>Edit comment</h1>
     <div class="mb-4">
-        {{-- TODO: Link --}}
         <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
+        <br>
+        <a href="{{ route('items.show', $item) }}"><i class="fas fa-long-arrow-alt-left"></i> Back to item's page</a>
     </div>
 
-    <h2>Editing comment as {{$user->name}}</h2>
-
-    {{-- TODO: Session flashes --}}
+    <h2>Editing comment for {{$comment->item->name}} as {{$user->name}}</h2>
 
     {{-- TODO: action, method --}}
     <form action="{{ route('comments.update', $comment) }}" method="POST" enctype="multipart/form-data">

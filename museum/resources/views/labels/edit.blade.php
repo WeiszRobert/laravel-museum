@@ -11,8 +11,6 @@
         <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
     </div>
 
-    {{-- TODO: Session flashes --}}
-
     {{-- TODO: action, method --}}
     <form action="{{ route('labels.update', $label) }}" method="POST" enctype="multipart/form-data">
         @method('PUT')
@@ -21,7 +19,12 @@
         <div class="form-group row mb-3">
             <label for="name" class="col-sm-2 col-form-label">Name*</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $label->name) }}">
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $label->name) }}">
+                @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
         </div>
 
