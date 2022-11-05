@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-            //name, display (boolean), color (hex)
             $table->string('name');
             $table->boolean('display');
             $table->string('color', 9);
