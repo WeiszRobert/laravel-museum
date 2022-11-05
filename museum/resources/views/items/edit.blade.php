@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <div class="form-group row mb-3">
+        <div class="form-group row mb-3" id="remove_cover_image_settings">
             <label class="col-sm-2 col-form-label">Settings</label>
             <div class="col-sm-10">
                 <div class="form-group">
@@ -145,6 +145,7 @@
     const coverImageInput = document.querySelector('input#image');
     const coverPreviewContainer = document.querySelector('#cover_preview');
     const coverPreviewImage = document.querySelector('img#cover_preview_image');
+    const removeCoverImageSettings = document.querySelector('#remove_cover_image_settings');
     // Render Blade to JS code:
     // TODO: Use attached image
     const defaultCover = `{{ asset('images/default_post_cover.jpg') }}`;
@@ -161,9 +162,15 @@
         const [file] = coverImageInput.files;
         if (file) {
             coverPreviewImage.src = URL.createObjectURL(file);
+            removeCoverImageSettings.classList.remove('d-none');
         } else {
             coverPreviewImage.src = defaultCover;
         }
+    }
+
+    //if cover image is the default one, hide the remove cover image setting
+    if (coverPreviewImage.src === defaultCover) {
+        removeCoverImageSettings.classList.add('d-none');
     }
 </script>
 @endsection
