@@ -96,7 +96,6 @@
         </div>
     </div>
 
-    @if ($item->image)
     <img
         id="cover_preview_image"
         src="{{
@@ -110,7 +109,6 @@
         width="350px"
         class="my-3"
     >
-    @endif
 
     <div class="mt-3">
         {!! nl2br(e($item->description)) !!}
