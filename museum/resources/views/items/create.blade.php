@@ -5,15 +5,11 @@
 <div class="container">
     <h1>Create item</h1>
     <div class="mb-4">
-        {{-- TODO: Link --}}
         <a href="{{ route('items.index')}}"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
     </div>
 
-    {{-- TODO: action, method, enctype --}}
     <form action=" {{ route('items.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-
-        {{-- TODO: Validation --}}
 
         <div class="form-group row mb-3">
             <label for="name" class="col-sm-2 col-form-label">Name*</label>
@@ -28,28 +24,6 @@
             </div>
         </div>
 
-        {{--
-            Handling invalid input fields:
-
-            <input type="text" class="form-control is-invalid" ...>
-            <div class="invalid-feedback">
-                Message
-            </div>
-        --}}
-{{--
-        <div class="form-group row mb-3">
-            <label for="description" class="col-sm-2 col-form-label">Description</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control @error('description') is-invalid @enderror" id="description" name="description" value="{{ old('description') }}">
-
-                @error('description')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-        </div>
---}}
         <div class="form-group row mb-3">
             <label for="description" class="col-sm-2 col-form-label">Description*</label>
             <div class="col-sm-10">
@@ -79,7 +53,6 @@
         <div class="form-group row mb-3">
             <label for="labels" class="col-sm-2 col-form-label py-0">Labels</label>
             <div class="col-sm-10">
-                {{-- TODO: Read post categories from DB --}}
                 @forelse ($labels as $label)
                     <div class="form-check">
                         <input
@@ -87,7 +60,6 @@
                             class="form-check-input"
                             value="{{ $label->id }}"
                             id="label{{ $label->id }}"
-                            {{-- TODO: name, checked --}}
                             name="labels[]"
                             @checked(
                                 in_array(
@@ -96,7 +68,6 @@
                                 )
                             )
                         >
-                        {{-- TODO --}}
                         <label for="label{{ $label->id }}" class="form-check-label">
                             <span class="badge" style="background: {{$label->color }}">
                                 {{ $label->name }}
@@ -109,13 +80,13 @@
             </div>
         </div>
 
-        <div>
-            @error('user')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
-        </div>
+        @error('labels.*')
+            <ul class="text-danger">
+                @foreach ($errors->get('labels.*') as $error)
+                    <li>{{ implode(', ', $error) }}</li>
+                @endforeach
+            </ul>
+        @enderror
 
         <div class="form-group row mb-3">
             <label for="image" class="col-sm-2 col-form-label">Cover image</label>
@@ -132,6 +103,14 @@
                     </div>
                 </div>
             </div>
+
+            @error('image')
+                <p class="text-danger">
+                    <small>
+                        {{ $message }}
+                    </small>
+                </p>
+            @enderror
         </div>
 
         <div class="text-center">
