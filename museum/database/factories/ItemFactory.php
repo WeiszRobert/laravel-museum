@@ -18,7 +18,7 @@ class ItemFactory extends Factory
     {
         return [
             // name, description, obtained (date)
-            'name' => fake()->word(),
+            'name' => ucfirst(fake()->unique()->word()),
             'description' => rtrim(fake()->sentence(), '.'),
             'obtained' => fake()->date(),
         ];

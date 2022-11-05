@@ -42,7 +42,7 @@ class LabelController extends Controller
     {
         $validated = $request->validate(
             [
-                'name' => ['required'],
+                'name' => ['required', 'unique:labels'],
                 'color' => [
                     'required',
                     'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
@@ -51,6 +51,7 @@ class LabelController extends Controller
             ],
             [
                 'name.required' => 'The label name is required.',
+                'name.unique' => 'The label name must be unique.',
                 'color.required' => 'The label color is required.',
                 'color.regex' => 'The label color must be a valid hex color code.',
                 'display.boolean' => 'The label visibility must be a boolean value.',
@@ -69,9 +70,9 @@ class LabelController extends Controller
         $label->display = $validated['display'] ?? false;
         $label->save();
 
-        Session::flash("item_created", $validated['name']);
+        Session::flash("label_created", $validated['name']);
 
-        return Redirect::route('items.index', $label);
+        return Redirect::route('labels.show', $label);
     }
 
     /**
@@ -118,7 +119,7 @@ class LabelController extends Controller
 
         $validated = $request->validate(
             [
-                'name' => ['required'],
+                'name' => ['required', 'unique:labels,name,' . $label->id],
                 'color' => [
                     'required',
                     'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
@@ -127,6 +128,7 @@ class LabelController extends Controller
             ],
             [
                 'name.required' => 'The label name is required.',
+                'name.unique' => 'The label name must be unique.',
                 'color.required' => 'The label color is required.',
                 'color.regex' => 'The label color must be a valid hex color code.',
                 'display.boolean' => 'The label visibility must be a boolean value.',

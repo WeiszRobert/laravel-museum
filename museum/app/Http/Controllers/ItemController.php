@@ -56,15 +56,16 @@ class ItemController extends Controller
 
         $validated = $request->validate(
             [
-                'name' => 'required',
-                'obtained' => 'required|date|before_or_equal:now',
-                'description' => 'required',
+                'name' => ['required', 'unique:items'],
+                'obtained' => ['required', 'date', 'before_or_equal:now'],
+                'description' => ['required'],
                 'labels' => ['nullable', 'array'],
                 'labels.*' => ['nullable', 'integer', 'exists:labels,id'],
                 'image' => ['nullable', 'file', 'image', 'max:4096']
             ],
             [
                 'name.required' => 'The name is required',
+                'name.unique' => 'The name must be unique',
                 'obtained.required' => 'The obtained date is required',
                 'obtained.date' => 'The obtained date must be a valid date',
                 'obtained.before_or_equal' => 'The obtained date must be today or earlier',
@@ -152,9 +153,9 @@ class ItemController extends Controller
 
         $validated = $request->validate(
             [
-                'name' => 'required',
-                'obtained' => 'required|date|before_or_equal:now',
-                'description' => 'required',
+                'name' => ['required'],
+                'obtained' => ['required', 'date', 'before_or_equal:now'],
+                'description' => ['required'],
                 'labels' => ['nullable', 'array'],
                 'labels.*' => ['nullable', 'integer', 'exists:labels,id'],
                 'image' => ['nullable', 'file', 'image', 'max:4096'],
@@ -217,7 +218,7 @@ class ItemController extends Controller
     {
         $this->authorize('delete', $item);
 
-        // Kitörli a itemot az adatbázisból
+        // Kitörli a itemet az adatbázisból
         $item->delete();
 
         Session::flash("item_deleted", $item->title);
