@@ -134,13 +134,8 @@
 
                             <div class="">
                                 <p class="mb-0">
-                                    Commented at: {{$comment->updated_at}}
+                                    Posted at: {{$comment->updated_at}}
                                 </p>
-                                @if ($comment->updated_at != $comment->created_at)
-                                <p class="mb-0">
-                                    Updated at: {{$comment->updated_at}}
-                                </p>
-                                @endif
 
                             </div>
                             <p class="mb-0">

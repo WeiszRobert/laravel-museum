@@ -109,7 +109,7 @@ class ItemController extends Controller
             'item' => $item,
             'user' => Auth::user(),
             'users' => User::all(),
-            'comments' => $item->comments()->orderBy('created_at', 'desc')->get()
+            'comments' => $item->comments()->orderBy('updated_at', 'asc')->get()
         ]);
     }
 
