@@ -17,8 +17,7 @@ class LabelFactory extends Factory
     public function definition()
     {
         return [
-            // name, display (bool), color (hex)
-            'name' => fake()->unique()->word(),
+            'name' => fake()->word(),
             'display' => fake()->boolean(),
             'color' => fake()->hexColor(),
         ];

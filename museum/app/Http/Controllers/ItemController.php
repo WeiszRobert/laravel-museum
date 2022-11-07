@@ -51,7 +51,7 @@ class ItemController extends Controller
     {
         $validated = $request->validate(
             [
-                'name' => ['required', 'unique:items'],
+                'name' => ['required'],
                 'obtained' => ['required', 'date', 'before_or_equal:now'],
                 'description' => ['required'],
                 'labels' => ['nullable', 'array'],
@@ -60,7 +60,6 @@ class ItemController extends Controller
             ],
             [
                 'name.required' => 'The name is required',
-                'name.unique' => 'The name must be unique',
                 'obtained.required' => 'The obtained date is required',
                 'obtained.date' => 'The obtained date must be a valid date',
                 'obtained.before_or_equal' => 'The obtained date must be today or earlier',

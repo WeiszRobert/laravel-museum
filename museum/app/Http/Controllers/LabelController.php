@@ -42,7 +42,7 @@ class LabelController extends Controller
     {
         $validated = $request->validate(
             [
-                'name' => ['required', 'unique:labels'],
+                'name' => ['required'],
                 'color' => [
                     'required',
                     'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
@@ -51,17 +51,11 @@ class LabelController extends Controller
             ],
             [
                 'name.required' => 'The label name is required.',
-                'name.unique' => 'The label name must be unique.',
                 'color.required' => 'The label color is required.',
                 'color.regex' => 'The label color must be a valid hex color code.',
                 'display.boolean' => 'The label visibility must be a boolean value.',
             ]
         );
-
-        $label = Label::where('name', $validated['name'])->first();
-        if ($label) {
-            return redirect()->route('labels.create')->with('error', 'The label already exists.');
-        }
 
         $label = new Label();
         $label->name = $validated['name'];
@@ -117,7 +111,7 @@ class LabelController extends Controller
 
         $validated = $request->validate(
             [
-                'name' => ['required', 'unique:labels,name,' . $label->id],
+                'name' => ['required'],
                 'color' => [
                     'required',
                     'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
@@ -126,7 +120,6 @@ class LabelController extends Controller
             ],
             [
                 'name.required' => 'The label name is required.',
-                'name.unique' => 'The label name must be unique.',
                 'color.required' => 'The label color is required.',
                 'color.regex' => 'The label color must be a valid hex color code.',
                 'display.boolean' => 'The label visibility must be a boolean value.',

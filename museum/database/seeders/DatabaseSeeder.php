@@ -14,13 +14,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //delete all tables and records if they exist
-        $this->command->call('migrate:refresh');
+        //this deletes all tables and records if they exist
+        //$this->command->call('migrate:refresh');
 
-        $users_count = 10;
-        $users = collect();
+        $users_count = \App\Models\User::count();
 
-        for ($i = 1; $i <= $users_count; $i++) {
+        if ($users_count == 0) {
+            $users = collect();
+            $users->add(
+                \App\Models\User::factory()->create([
+                    'name' => 'admin',
+                    'email' => 'admin@szerveroldali.hu',
+                    'password' => bcrypt('adminpwd'),
+                    'is_admin' => true,
+                ])
+            );
+            $users_count = 1;
+        } else {
+            $users = \App\Models\User::all();
+        }
+
+        for ($i = $users_count; $i <= $users_count+10 ; $i++) {
             $users->add(
                 \App\Models\User::factory()->create([
                     'email' => 'user' . $i . '@szerveroldali.hu',
@@ -29,17 +43,14 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-        $users->add(
-            \App\Models\User::factory()->create([
-                'name' => 'Admin User',
-                'email' => 'admin@szerveroldali.hu',
-                'password' => bcrypt('adminpwd'),
-                'is_admin' => true,
-            ])
-        );
+        $users_count = \App\Models\User::count();
 
-        $items = \App\Models\Item::factory(rand(10, 15))->create();
-        $labels = \App\Models\Label::factory(rand(3, 5))->create();
+
+        \App\Models\Item::factory(rand(10, 15))->create();
+        \App\Models\Label::factory(rand(3, 5))->create();
+
+        $items = \App\Models\Item::all();
+        $labels = \App\Models\Label::all();
 
         $items->each(function ($item) use (&$users, &$labels) {
             $item->labels()->sync(
