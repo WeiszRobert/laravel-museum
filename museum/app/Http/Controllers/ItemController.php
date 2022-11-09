@@ -34,6 +34,7 @@ class ItemController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Item::class);
         return view('items.create', [
             'item' => new Item(),
             'labels' => Label::all(),
@@ -49,6 +50,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Item::class);
         $validated = $request->validate(
             [
                 'name' => ['required'],

@@ -27,6 +27,7 @@ class LabelController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Label::class);
         return view('labels.create', [
             'labels' => Label::all()
         ]);
@@ -40,6 +41,7 @@ class LabelController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Label::class);
         $validated = $request->validate(
             [
                 'name' => ['required'],
