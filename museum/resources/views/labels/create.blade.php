@@ -40,7 +40,7 @@
             <label for="display" class="col-sm-2 col-form-label">Is it visible?</label>
             <div class="col-sm-10">
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="display" name="display" value="1">
+                    <input type="checkbox" class="form-check-input" id="display" name="display" value="1" {{ old('display') ? "checked" : "" }}>
                 </div>
             </div>
         </div>
